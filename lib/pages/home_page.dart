@@ -176,7 +176,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Image.asset(
-                            'images/logo.png',
+                            kost.imageUrl,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -186,7 +186,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             Text(kost.name),
                             Text(kost.location),
-                            Text(kost.rating),
+                            Text(kost.fasilitas.kamarMandi!),
                           ],
                         ),
                       ],
