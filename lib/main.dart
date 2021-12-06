@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:kost_z/helpers/navigation_helper.dart';
+import 'package:kost_z/models/kost_item.dart';
+import 'package:kost_z/pages/bookmark_page.dart';
+import 'package:kost_z/pages/get_started_page.dart';
 import 'package:kost_z/pages/home_page.dart';
-import 'package:kost_z/started/splash_screen.dart';
+import 'package:kost_z/pages/detail_page.dart';
+import 'package:kost_z/pages/main_page.dart';
+import 'package:kost_z/pages/search_page.dart';
+import 'package:kost_z/pages/setting_page.dart';
+import 'package:kost_z/pages/splash_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,10 +18,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kost-Z',
-      initialRoute: HomePage.routeName,
+      navigatorKey: navigatorKey,
+      initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
+        GetStartedPage.routeName: (context) => GetStartedPage(),
+        MainPage.routeName: (context) => MainPage(),
         HomePage.routeName: (context) => HomePage(),
+        DetailPage.routeName: (context) => DetailPage(
+            kost: ModalRoute.of(context)!.settings.arguments as KostItem),
+        SearchPage.routeName: (context) => SearchPage(),
+        BookmarkPage.routeName: (context) => BookmarkPage(),
+        SettingPage.routeName: (context) => SettingPage(),
       },
     );
   }

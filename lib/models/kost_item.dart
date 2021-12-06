@@ -144,7 +144,7 @@ var kostItemList = [
     ),
   ),
   KostItem(
-    name: 'Kost Elite Pagesangan;',
+    name: 'Kost Elite Pagesangan',
     location: 'Pagesangan',
     rating: '5.0',
     imageUrl: 'assets/kos12/kos_12_1.jpg',

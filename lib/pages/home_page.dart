@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/kost_item.dart';
 import 'package:kost_z/widgets/features_card.dart';
+import 'package:kost_z/widgets/kost_item_card.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
   static const routeName = '/home_page';
+
+  const HomePage({Key? key}) : super(key: key);
 
   Widget buildSearch(BuildContext context) {
     return Row(
@@ -18,6 +19,7 @@ class HomePage extends StatelessWidget {
           alignment: Alignment.topCenter,
           width: MediaQuery.of(context).size.width * 0.8,
           child: TextField(
+            cursorColor: kGreyColor,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: kWhiteColor,
@@ -123,19 +125,7 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          Container(
-            height: 150,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                SizedBox(width: 12),
-                FeaturesCard(),
-                FeaturesCard(),
-                FeaturesCard(),
-                SizedBox(width: 12),
-              ],
-            ),
-          )
+          FeaturesCard(),
         ],
       ),
     );
@@ -169,30 +159,7 @@ class HomePage extends StatelessWidget {
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
               children: kostItemList.map((kost) {
-                return Container(
-                  height: 60,
-                  child: Card(
-                    child: Stack(
-                      children: [
-                        Expanded(
-                          child: Image.asset(
-                            kost.imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(kost.name),
-                            Text(kost.location),
-                            Text(kost.fasilitas.kamarMandi!),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return KostItemCard(kost: kost);
               }).toList(),
             ), //widget Grid
           )
