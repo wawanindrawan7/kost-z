@@ -131,10 +131,7 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 10,
+                height: 25,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -154,11 +151,7 @@ class DetailPage extends StatelessWidget {
                     ),
                     FadeInDown(
                       duration: Duration(milliseconds: 900),
-                      child: Text(
-                        "Ex cillum adipisicing mollit sit eiusmod officia nulla eu sunt. Dolor eiusmod nostrud amet pariatur aute sint sunt non et. Eiusmod ut incididunt do eu. Amet cillum est aliqua ut occaecat magna. Fugiat minim consectetur incididunt ad commodo consequat occaecat commodo fugiat amet laborum adipisicing ex.",
-                        style: titleTextStyle.copyWith(fontSize: 12),
-                        textAlign: TextAlign.justify,
-                      ),
+                      child: Text(kost.deskripsi),
                     ),
                   ],
                 ),
