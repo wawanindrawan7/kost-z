@@ -155,6 +155,153 @@ var kostItemList = [
           tv: 'Televisi'),
       deskripsi:
           'Cabang kedua kosan kami yang terletak di Jl. Semanggi III No.11, Monjok Bar., Kec. Selaparang, Kota Mataram, tidak jauh dari kos pertama kami yakni Kos Mio Green 2 namun tempat ini lebih mewah karena sudah ditambahkan AC '),
+  KostItem(
+      name: 'Kos Elite Pagesangan',
+      location: 'Pagesangan',
+      rating: '4.0',
+      imageUrl: 'assets/kos21/1.jpeg',
+      noHp: 082341918065,
+      maps: 'https://maps.app.goo.gl/YuZDWuS4FQoRb9k99',
+      fasilitas: Fasilitas(
+          kamarTidur: 'Kamar Tidur',
+          kamarMandi: 'Kamar Mandi',
+          ac: 'AC',
+          lemari: 'Lemari',
+          springBed: 'Spring Bed',
+          tv: 'Televisi',
+          dapur: 'Dapur',
+          parkiran: 'Parkiran'),
+      deskripsi:
+          'Kos ELite mewah yang terletak di pagesangan tinggal bawa pakaian karena semua perlengkapan sudah disiapkan, dekat dengan kampus UIN Mataram dan Kampu Muhammadiyah Mataram'),
+  KostItem(
+      name: 'Rumah Kost',
+      location: 'Turida',
+      rating: '4.8',
+      imageUrl: 'assets/kos22/1.jpeg',
+      noHp: 08197218251,
+      maps: 'https://maps.app.goo.gl/kuTDpm7LNStsvuk16',
+      fasilitas: Fasilitas(
+          kamarTidur: 'Kamar Tidur',
+          kamarMandi: 'Kamar Mandi',
+          lemari: 'Lemari',
+          springBed: 'Spring Bed',
+          dapur: 'Dapur',
+          parkiran: 'Parkiran Mobil / Motor'),
+      deskripsi:
+          'Rumah Kost adalah tempat penginapan yang berada di daerah Turida Sandubaya, Kosan yang berada di dekat Gedung Olahraga 14 Desember, lokasi kos dekat dengan Lombok Post dan Kampus Universitas Al Azhar Mataram'),
+  KostItem(
+    name: 'Mahaba Kost',
+    location: 'Jempong Baru',
+    rating: '4.8',
+    imageUrl: 'assets/kos23/1.jpeg',
+    noHp: 085652243340,
+    maps: 'https://maps.app.goo.gl/ozzoJc9JjCNt9zr67',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        springBed: 'Spring Bed',
+        dapur: 'Dapur',
+        parkiran: 'Parkiran Mobil / Motor'),
+    deskripsi:
+        'Koskosan mewah yang terletak di jempong baru sekarbela, dekat dengan pantai Loang baloq dan pantai gading, dari desain rumah hingga kamar sudah dibuat secara modern dan terkini, sudah disediakan dapur dan wastafel yang akan membuat betah untuk bertempat tinggal',
+  ),
+  KostItem(
+    name: 'D Mawar Kost',
+    location: 'Pagesangan',
+    rating: '4.7',
+    imageUrl: 'assets/kos24/1.jpeg',
+    noHp: 081338291268,
+    maps: 'https://maps.app.goo.gl/CwPrWy13PcbASMe48',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        springBed: 'Spring Bed',
+        parkiran: 'Parkiran Motor'),
+    deskripsi:
+        'koskosan luas dan elegan kosan yang terletak dipagesangan dekat dengan RSUD kota Mataram, pertengahan kota, dekat dengan Lombok Epicentrum Mall, pertengahan dari semua kampus terkenal di Mataram seperti UIN Mataram, Universitas Mataram, Universitas Bumigora, Universitas 45 dan Universitas Muhamadiyah',
+  ),
+  KostItem(
+    name: 'Kost Dewi',
+    location: 'Pagutan',
+    rating: '4.9',
+    imageUrl: 'assets/kos25/1.jpeg',
+    noHp: 081915966667,
+    maps: 'https://maps.app.goo.gl/3gWRLEWCFXiB4NAL6',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        springBed: 'Spring Bed',
+        parkiran: 'Parkiran Motor'),
+    deskripsi:
+        'koskosan dengan temapt yang strategis dan dekat dengan kampus kampus besar di sekitar kota Mataram, lingkungan yang bersih dan penghuninya di jamin ramah, sangat di rekomendasi bagi pelajar yang ingin bertemapat tinggal dan sudah disediakan berugak untuk menerima tamu',
+  ),
+  KostItem(
+    name: 'Nanda Kost',
+    location: 'Dasan Cermen',
+    rating: '4.9',
+    imageUrl: 'assets/kos26/1.jpeg',
+    noHp: 081907177747,
+    maps: 'https://maps.app.goo.gl/V32rC8ejRvwYystZ8',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        springBed: 'Spring Bed',
+        parkiran: 'Parkiran Motor'),
+    deskripsi:
+        'Nanda Kost adalah tempat penginapan bersih dan nyaman yang berlokasi di dasan cermen, lokasi kosan dekat dengan Rumah Sakit Umum Provinsi Nusa Tenggara Barat dan dekat dengan Pom Bensin, dan cocok untuk pelajar karena dekat dengan SMAN 8 Mataram dan pusat perbelanjaan yang paling ramai di Mataram yakni Lotte',
+  ),
+  KostItem(
+    name: 'Pondok Nabila',
+    location: 'Kekalik Jaya',
+    rating: '4.0',
+    imageUrl: 'assets/kos27/1.jpeg',
+    noHp: 082166098792,
+    maps: 'https://maps.app.goo.gl/kwSGQb37V2fuQvpt6',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        springBed: 'Spring Bed',
+        parkiran: 'Parkiran Motor'),
+    deskripsi:
+        'Koskosan khusus putri yang terletak di Kekalik Jaya sangat cocok untuk Mahasiswi yang berasal dari luar kota Mataram, kosan bersih, nyaman dan terletak di dekat kampus Universitas Mataram dan Kampus Universitas Teknologi Mataram',
+  ),
+  KostItem(
+    name: 'Kost Omah dToh',
+    location: 'Pagesangan',
+    rating: '4.9',
+    imageUrl: 'assets/kos28/1.jpeg',
+    noHp: 085333964599,
+    maps: 'https://maps.app.goo.gl/tNCZjFy1X6tj3xa2A',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        parkiran: 'Parkiran Motor',
+        dapur: 'Dapur'),
+    deskripsi:
+        'Koskosan bersih nyaman dan dekat dekat dengan pasar pagesangan, selain itu lokasi dari kosan ini juga dekat dengan Kampus UIN Mataram yang letaknya di Jempong, lokasi kosan yang strategis dan dekat dengan pasar umum pagesangan',
+  ),
+  KostItem(
+    name: 'Manarat Green House \nKost Putri',
+    location: 'Kekalik Jaya',
+    rating: '4.7',
+    imageUrl: 'assets/kos29/1.jpeg',
+    noHp: 087761200070,
+    maps: 'https://maps.app.goo.gl/zzxe8fPUfUsk6Wqt9',
+    fasilitas: Fasilitas(
+        kamarTidur: 'Kamar Tidur',
+        kamarMandi: 'Kamar Mandi',
+        lemari: 'Lemari',
+        wifi: 'Wifi',
+        dapur: 'Dapur',
+        parkiran: 'Parkiran Motor'),
+    deskripsi:
+        'Koskosan yang berada di Kekalik, koskosan khusus untuk putri dengan fasiltas yang sangat lengkap akan membuat sangat betah berada di dalam kos, selain itu lokasi yang strategis dengan dengan kampus Universitas Mataram dan SMAN 2 Mataram sekaligus Museum Nusa Tenggara Barat, kosan bersih nyaman dan tetangga yang ramah.',
+  ),
 ];
 
 class Fasilitas {
@@ -167,6 +314,7 @@ class Fasilitas {
   late String? ac;
   late String? kulkas;
   late String? tv;
+  late String? wifi;
 
   Fasilitas({
     this.kamarTidur,
@@ -178,5 +326,6 @@ class Fasilitas {
     this.ac,
     this.kulkas,
     this.tv,
+    this.wifi,
   });
 }
