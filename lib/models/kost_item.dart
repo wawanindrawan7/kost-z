@@ -97,7 +97,7 @@ var kostItemList = [
       name: 'Kost Pondok Indah',
       location: 'Kekalik',
       rating: '4.6',
-      imageUrl: 'assets/kos17/1.png',
+      imageUrl: 'assets/kos8/1.png',
       noHp: 081236296499,
       maps: 'https://maps.app.goo.gl/SVmadvshUM3Ctygk6',
       fasilitas: Fasilitas(
@@ -112,7 +112,7 @@ var kostItemList = [
       name: 'Kost Rahayu',
       location: 'Pejanggik',
       rating: '3,7',
-      imageUrl: 'assets/kos18/1.jpeg',
+      imageUrl: 'assets/kos9/1.jpeg',
       noHp: 081337283176,
       maps: 'https://maps.app.goo.gl/JAFBMdbfMJ4fLVEP9',
       fasilitas: Fasilitas(
@@ -127,7 +127,7 @@ var kostItemList = [
       name: 'Kos Mio Green 1',
       location: 'Monjok Barat',
       rating: '4.3',
-      imageUrl: 'assets/kos20/1.jpeg',
+      imageUrl: 'assets/kos10/1.jpeg',
       noHp: 087865249136,
       maps: 'https://maps.app.goo.gl/KtErQgPYBgWGqumUA',
       fasilitas: Fasilitas(
@@ -143,7 +143,7 @@ var kostItemList = [
       name: 'Kos Mio Green 2',
       location: 'Monjok',
       rating: '4.3',
-      imageUrl: 'assets/kos19/1.jpeg',
+      imageUrl: 'assets/kos11/1.jpeg',
       noHp: 087865249136,
       maps: 'https://maps.app.goo.gl/YuZDWuS4FQoRb9k99',
       fasilitas: Fasilitas(
@@ -159,7 +159,7 @@ var kostItemList = [
       name: 'Kos Elite Pagesangan',
       location: 'Pagesangan',
       rating: '4.0',
-      imageUrl: 'assets/kos21/1.jpeg',
+      imageUrl: 'assets/kos12/1.jpeg',
       noHp: 082341918065,
       maps: 'https://maps.app.goo.gl/YuZDWuS4FQoRb9k99',
       fasilitas: Fasilitas(
@@ -177,7 +177,7 @@ var kostItemList = [
       name: 'Rumah Kost',
       location: 'Turida',
       rating: '4.8',
-      imageUrl: 'assets/kos22/1.jpeg',
+      imageUrl: 'assets/kos13/1.jpeg',
       noHp: 08197218251,
       maps: 'https://maps.app.goo.gl/kuTDpm7LNStsvuk16',
       fasilitas: Fasilitas(
@@ -193,7 +193,7 @@ var kostItemList = [
     name: 'Mahaba Kost',
     location: 'Jempong Baru',
     rating: '4.8',
-    imageUrl: 'assets/kos23/1.jpeg',
+    imageUrl: 'assets/kos14/1.jpeg',
     noHp: 085652243340,
     maps: 'https://maps.app.goo.gl/ozzoJc9JjCNt9zr67',
     fasilitas: Fasilitas(
@@ -210,7 +210,7 @@ var kostItemList = [
     name: 'D Mawar Kost',
     location: 'Pagesangan',
     rating: '4.7',
-    imageUrl: 'assets/kos24/1.jpeg',
+    imageUrl: 'assets/kos15/1.jpeg',
     noHp: 081338291268,
     maps: 'https://maps.app.goo.gl/CwPrWy13PcbASMe48',
     fasilitas: Fasilitas(
@@ -225,7 +225,7 @@ var kostItemList = [
     name: 'Kost Dewi',
     location: 'Pagutan',
     rating: '4.9',
-    imageUrl: 'assets/kos25/1.jpeg',
+    imageUrl: 'assets/kos16/1.jpeg',
     noHp: 081915966667,
     maps: 'https://maps.app.goo.gl/3gWRLEWCFXiB4NAL6',
     fasilitas: Fasilitas(
@@ -241,7 +241,7 @@ var kostItemList = [
     name: 'Nanda Kost',
     location: 'Dasan Cermen',
     rating: '4.9',
-    imageUrl: 'assets/kos26/1.jpeg',
+    imageUrl: 'assets/kos17/1.jpeg',
     noHp: 081907177747,
     maps: 'https://maps.app.goo.gl/V32rC8ejRvwYystZ8',
     fasilitas: Fasilitas(
@@ -257,7 +257,7 @@ var kostItemList = [
     name: 'Pondok Nabila',
     location: 'Kekalik Jaya',
     rating: '4.0',
-    imageUrl: 'assets/kos27/1.jpeg',
+    imageUrl: 'assets/kos18/1.jpeg',
     noHp: 082166098792,
     maps: 'https://maps.app.goo.gl/kwSGQb37V2fuQvpt6',
     fasilitas: Fasilitas(
@@ -273,7 +273,7 @@ var kostItemList = [
     name: 'Kost Omah dToh',
     location: 'Pagesangan',
     rating: '4.9',
-    imageUrl: 'assets/kos28/1.jpeg',
+    imageUrl: 'assets/kos19/1.jpeg',
     noHp: 085333964599,
     maps: 'https://maps.app.goo.gl/tNCZjFy1X6tj3xa2A',
     fasilitas: Fasilitas(
@@ -289,7 +289,7 @@ var kostItemList = [
     name: 'Manarat Green House \nKost Putri',
     location: 'Kekalik Jaya',
     rating: '4.7',
-    imageUrl: 'assets/kos29/1.jpeg',
+    imageUrl: 'assets/kos20/1.jpeg',
     noHp: 087761200070,
     maps: 'https://maps.app.goo.gl/zzxe8fPUfUsk6Wqt9',
     fasilitas: Fasilitas(

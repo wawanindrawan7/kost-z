@@ -51,19 +51,20 @@ flutter:
     - assets/kos5/
     - assets/kos6/
     - assets/kos7/
+    - assets/kos8/
+    - assets/kos9/
+    - assets/kos10/
+    - assets/kos11/
+    - assets/kos12/
+    - assets/kos13/
+    - assets/kos14/
+    - assets/kos15/
+    - assets/kos16/
     - assets/kos17/
     - assets/kos18/
     - assets/kos19/
     - assets/kos20/
-    - assets/kos21/
-    - assets/kos22/
-    - assets/kos23/
-    - assets/kos24/
-    - assets/kos25/
-    - assets/kos26/
-    - assets/kos27/
-    - assets/kos28/
-    - assets/kos29/
+ 
     
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
