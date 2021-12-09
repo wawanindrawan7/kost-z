@@ -8,6 +8,8 @@ import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/pages/setting_page.dart';
+import 'package:kost_z/pages/sign_in_page.dart';
+import 'package:kost_z/pages/sign_up_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
 
 void main() => runApp(MyApp());
@@ -19,10 +21,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kost-Z',
       navigatorKey: navigatorKey,
-      initialRoute: SplashScreen.routeName,
+      initialRoute: MainPage.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         GetStartedPage.routeName: (context) => GetStartedPage(),
+        SignInPage.routeName: (context) => SignInPage(),
+        SignUpPage.routeName: (context) => SignUpPage(),
         MainPage.routeName: (context) => MainPage(),
         HomePage.routeName: (context) => HomePage(),
         DetailPage.routeName: (context) => DetailPage(
