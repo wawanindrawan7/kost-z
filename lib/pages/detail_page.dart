@@ -163,9 +163,67 @@ class DetailPage extends StatelessWidget {
           ),
           FadeInDown(
             duration: Duration(milliseconds: 900),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: kost.facility.map((facility) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 20,
+                          child: Image.asset(
+                            'images/item.png',
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(facility),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildOtherImages() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FadeInDown(
+            duration: Duration(milliseconds: 700),
+            child: Text(
+              "Other Images",
+              style: titleTextStyle.copyWith(
+                  fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          FadeInDown(
+            duration: Duration(milliseconds: 900),
             child: Container(
+              height: 150,
               child: ListView(
-                children: [],
+                scrollDirection: Axis.horizontal,
+                children: kost.assetImages.map((photo) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(photo),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ),
@@ -201,6 +259,11 @@ class DetailPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              buildFacility(),
+              SizedBox(
+                height: 20,
+              ),
+              buildOtherImages(),
             ],
           ),
         ),
