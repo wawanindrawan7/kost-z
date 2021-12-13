@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "678336908876",
+    "project_id": "kostz-886c9",
+    "storage_bucket": "kostz-886c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678336908876:android:2a31caf352ac7d3559aee9",
+        "android_client_info": {
+          "package_name": "com.dicoding.kost_z"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678336908876-1p8ur6m9qqj4np6jafg01229c957k1rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf7_ig3vga3NXOVWkVAyqOZoGILJpb8fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678336908876-1p8ur6m9qqj4np6jafg01229c957k1rg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

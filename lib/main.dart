@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/helpers/navigation_helper.dart';
 import 'package:kost_z/models/kost_item.dart';
@@ -12,7 +13,12 @@ import 'package:kost_z/pages/sign_in_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
