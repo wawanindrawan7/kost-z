@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/pages/main_page.dart';
+import 'package:kost_z/pages/sign_in_page.dart';
 
 class GetStartedPage extends StatelessWidget {
   static const routeName = '/get_started_page';
@@ -117,7 +117,7 @@ class GetStartedPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        MainPage.routeName,
+                        SignInPage.routeName,
                       );
                     },
                     child: Row(

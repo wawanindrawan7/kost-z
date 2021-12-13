@@ -165,26 +165,27 @@ class DetailPage extends StatelessWidget {
             duration: Duration(milliseconds: 900),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: kost.facility.map((facility) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 20,
-                          child: Image.asset(
-                            'images/item.png',
+              children: kost.facility.map(
+                (facility) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.explore_rounded,
+                            color: Colors.purple,
+                            size: 22,
                           ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(facility),
-                      ],
+                          SizedBox(width: 8),
+                          Text(facility),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                },
+              ).toList(),
             ),
           ),
         ],
@@ -215,15 +216,17 @@ class DetailPage extends StatelessWidget {
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: kost.assetImages.map((photo) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(photo),
-                    ),
-                  );
-                }).toList(),
+                children: kost.assetImages.map(
+                  (photo) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(photo),
+                      ),
+                    );
+                  },
+                ).toList(),
               ),
             ),
           ),
@@ -264,6 +267,9 @@ class DetailPage extends StatelessWidget {
                 height: 20,
               ),
               buildOtherImages(),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
@@ -333,14 +339,6 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    launchUrl(String url) async {
-      if (await canLaunch(url)) {
-        launch(url);
-      } else {
-        throw "Could not launch $url";
-      }
-    }
-
     return Scaffold(
       backgroundColor: kWhiteColor,
       floatingActionButton: FloatingActionButton.extended(

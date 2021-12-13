@@ -92,12 +92,15 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Discover For You',
-            style: titleTextStyle.copyWith(
-                fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+        leading: Icon(
+          Icons.explore_rounded,
+          color: Colors.purple,
+          size: 30,
+        ),
+        title: Text(
+          'Discover For You',
+          style: titleTextStyle.copyWith(
+              fontSize: 16, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
         backgroundColor: kWhiteColor,

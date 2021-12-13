@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kost-Z',
       navigatorKey: navigatorKey,
-      initialRoute: MainPage.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         GetStartedPage.routeName: (context) => GetStartedPage(),

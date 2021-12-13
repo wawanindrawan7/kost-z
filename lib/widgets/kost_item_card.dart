@@ -26,7 +26,7 @@ class KostItemCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 170,
+              height: 190,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
@@ -35,7 +35,7 @@ class KostItemCard extends StatelessWidget {
             ),
             Container(
               height: 90,
-              margin: EdgeInsets.only(top: 120),
+              margin: EdgeInsets.only(top: 135),
               padding: EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(

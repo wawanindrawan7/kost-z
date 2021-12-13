@@ -9,12 +9,15 @@ class BookmarkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Bookmark Page',
-            style: titleTextStyle.copyWith(
-                fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+        leading: Icon(
+          Icons.book_rounded,
+          color: Colors.purple,
+          size: 30,
+        ),
+        title: Text(
+          'Bookmark Page',
+          style: titleTextStyle.copyWith(
+              fontSize: 16, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
         backgroundColor: kWhiteColor,

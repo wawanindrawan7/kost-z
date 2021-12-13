@@ -286,7 +286,7 @@ var kostItemList = [
       assetImages: [
         'assets/kos13/1.jpeg',
         'assets/kos13/2.jpeg',
-        'assets/kos13/3.jpeg'
+        
       ],
       facility: [
         'Kamar Tidur',
@@ -330,7 +330,7 @@ var kostItemList = [
       assetImages: [
         'assets/kos15/1.jpeg',
         'assets/kos15/2.jpeg',
-        'assets/kos15/3.jpeg'
+        
       ],
       facility: [
         'Kamar Tidur',

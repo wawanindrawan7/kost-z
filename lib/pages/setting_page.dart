@@ -10,12 +10,15 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Setting Page',
-            style: titleTextStyle.copyWith(
-                fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+        leading: Icon(
+          Icons.settings,
+          color: Colors.purple,
+          size: 30,
+        ),
+        title: Text(
+          'Setting Page',
+          style: titleTextStyle.copyWith(
+              fontSize: 16, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
         backgroundColor: kWhiteColor,
