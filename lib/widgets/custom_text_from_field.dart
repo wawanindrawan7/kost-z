@@ -5,7 +5,7 @@ class CustomTextFormField extends StatelessWidget {
   final String title;
   final String hintText;
   final bool obscureText;
-  final TextEditingController controller;
+  final TextEditingController controller; 
 
   const CustomTextFormField({
     Key? key,

@@ -4,6 +4,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:kost_z/common/styles.dart';
 
 class ExplorePage extends StatefulWidget {
+    static const routeName = '/explore_page';
+
   const ExplorePage({Key? key}) : super(key: key);
 
   @override

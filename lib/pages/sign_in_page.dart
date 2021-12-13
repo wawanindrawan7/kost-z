@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/cubit/auth_cubit.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
 import 'package:kost_z/widgets/custom_button.dart';
@@ -47,10 +49,36 @@ class SignInPage extends StatelessWidget {
       }
 
       Widget submitButton() {
-        return CustomButton(
-          title: 'Sign In',
-          onPressed: () {
-            Navigator.pushNamed(context, MainPage.routeName);
+        return BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, MainPage.routeName, (route) => false);
+            } else if (state is AuthFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(state.error),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return CustomButton(
+              title: 'Sign In',
+              onPressed: () {
+                context.read<AuthCubit>().signIn(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+              },
+            );
           },
         );
       }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/cubit/auth_cubit.dart';
 import 'package:kost_z/pages/sign_in_page.dart';
 
 class SettingPage extends StatelessWidget {
@@ -8,6 +10,39 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget btnLogOut() {
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(state.error),
+              ),
+            );
+          } else if (state is AuthInitial) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, SignInPage.routeName, (route) => false);
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+          return ElevatedButton(
+            onPressed: () {
+              context.read<AuthCubit>().signOut();
+            },
+            child: Text('Logout'),
+            style: ElevatedButton.styleFrom(primary: kPrimaryColor),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
@@ -52,13 +87,7 @@ class SettingPage extends StatelessWidget {
                 SizedBox(
                   height: 12,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignInPage.routeName);
-                  },
-                  child: Text('Logout'),
-                  style: ElevatedButton.styleFrom(primary: kPrimaryColor),
-                ),
+                btnLogOut()
               ],
             ),
           ),

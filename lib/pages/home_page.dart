@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/cubit/auth_cubit.dart';
 import 'package:kost_z/models/kost_item.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
@@ -43,37 +45,15 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildTextHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24),
-      margin: EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.person_rounded,
-                color: kWhiteColor,
-                size: 22,
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Text(
-                'Hi, Iqbal!',
-                style: titleTextStyle.copyWith(
-                  fontSize: 14,
-                  color: kWhiteColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 26,
-          ),
-          Text(
+  Widget buildTitleheader(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          margin:
+              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+          child: Text(
             'Let\'s Explore the\nKost Together',
             textAlign: TextAlign.center,
             style: titleTextStyle.copyWith(
@@ -82,8 +62,48 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildNameHeader() {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            margin: EdgeInsets.only(top: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.person_rounded,
+                      color: kWhiteColor,
+                      size: 22,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      'Hi, Iqbal!',
+                      style: titleTextStyle.copyWith(
+                        fontSize: 14,
+                        color: kWhiteColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        } else {
+          return SizedBox();
+        }
+      },
     );
   }
 
@@ -103,7 +123,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        child: buildTextHeader());
+        child: buildNameHeader());
   }
 
   Widget buildFeatures() {
@@ -181,6 +201,7 @@ class HomePage extends StatelessWidget {
                 buildRecommended(),
               ],
             ),
+            buildTitleheader(context),
             buildSearch(context),
           ],
         ),
