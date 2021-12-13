@@ -286,7 +286,6 @@ var kostItemList = [
       assetImages: [
         'assets/kos13/1.jpeg',
         'assets/kos13/2.jpeg',
-        
       ],
       facility: [
         'Kamar Tidur',
@@ -330,7 +329,6 @@ var kostItemList = [
       assetImages: [
         'assets/kos15/1.jpeg',
         'assets/kos15/2.jpeg',
-        
       ],
       facility: [
         'Kamar Tidur',
@@ -423,7 +421,7 @@ var kostItemList = [
         'Parkiran Motor',
       ]),
   KostItem(
-      name: 'Manarat Green House \nKost Putri',
+      name: 'Manarat GreenHouse',
       location: 'Kekalik Jaya',
       rating: '4.7',
       imageUrl: 'assets/kos20/1.jpeg',
