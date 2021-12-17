@@ -1,18 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/data/models/user_model.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
-import 'package:kost_z/services/api_service.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
-
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   Widget buildSearch(BuildContext context) {
     return Row(
@@ -88,7 +108,7 @@ class HomePage extends StatelessWidget {
                 width: 4,
               ),
               Text(
-                'Hi, Iqbal!',
+                'Hi, ${loggedInUser.firstName}!',
                 style: titleTextStyle.copyWith(
                   fontSize: 14,
                   color: kWhiteColor,

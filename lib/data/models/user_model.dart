@@ -1,44 +1,32 @@
-import 'package:equatable/equatable.dart';
-import 'package:kost_z/domain/entities/user.dart';
+class UserModel {
+  String? uid;
+  String? email;
+  String? firstName;
+  String? secondName;
+  String? hoby;
+  String? password;
 
-class UsersModel extends Equatable {
-  final String? id;
-  final String? email;
-  final String? name;
-  final String? address;
+  UserModel({this.uid, this.email, this.firstName, this.secondName, this.hoby});
 
-  UsersModel({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.address,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'email': email,
-      'name': name,
-      'address': address,
-    };
-  }
-
-  factory UsersModel.fromMap(Map<String, dynamic> map) {
-    return UsersModel(
-      id: map['id'] != null ? map['id'] : null,
-      email: map['email'] != null ? map['email'] : null,
-      name: map['name'] != null ? map['name'] : null,
-      address: map['address'] != null ? map['address'] : null,
+  //receiving data from server
+  factory UserModel.fromMap(map) {
+    return UserModel(
+      uid: map['uid'],
+      email: map['email'],
+      firstName: map['firstName'],
+      secondName: map['secondName'],
+      hoby: map['hoby'],
     );
   }
 
-  Users toEntity() => Users(
-        id: id,
-        email: email,
-        name: name,
-        address: address,
-      );
-
-  @override
-  List<Object?> get props => [id, email, name, address];
+  //sending  data to our  server
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'email': email,
+      'firstName': firstName,
+      'secondName': secondName,
+      'hoby': hoby,
+    };
+  }
 }

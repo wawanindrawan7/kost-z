@@ -2,11 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:kost_z/injection.dart' as getIt;
+
 import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/bookmark_page.dart';
 import 'package:kost_z/pages/explore_page.dart';
-import 'package:kost_z/pages/get_started_page.dart';
 import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
@@ -14,7 +13,6 @@ import 'package:kost_z/pages/setting_page.dart';
 import 'package:kost_z/pages/sign_in_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
-import 'package:kost_z/providers/auth_notifier.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/services/api_service.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +22,6 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(MyApp());
-  getIt.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -32,12 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthNotifer(
-            signInUser: getIt.getIt(),
-            signUpUser: getIt.getIt(),
-          ),
-        ),
         ChangeNotifierProvider(
           create: (_) => KostNotifier(
             apiService: ApiService(Client()),
@@ -47,7 +38,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Kost-Z',
-        home: MainPage(),
+        home: SplashScreen(),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case SplashScreen.routeName:

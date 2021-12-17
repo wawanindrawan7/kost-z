@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
-import 'package:kost_z/providers/auth_notifier.dart';
 import 'package:kost_z/widgets/custom_button.dart';
 import 'package:kost_z/widgets/custom_text_from_field.dart';
 import 'package:provider/provider.dart';
@@ -18,142 +20,197 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController passwordController =
-      TextEditingController(text: '');
-  bool _isLoading = false;
+  final _formKey = GlobalKey<FormState>(); //form
+
+  final TextEditingController emailController =
+      new TextEditingController(); //container untuk form
+  final TextEditingController passwordController = new TextEditingController();
+
+  //firebase
+  final _auth = FirebaseAuth.instance;
+
+  bool isHiddenPassword = true;
 
   @override
   Widget build(BuildContext context) {
-    Widget title() {
-      return Container(
-        margin: EdgeInsets.only(top: 30),
-        child: Text(
-          'Sign In with your\nexisting account',
-          style: titleTextStyle.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
-    }
+    final emailField = TextFormField(
+      autofocus: false,
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
 
-    Widget inputSection(BuildContext context) {
-      Widget emailInput() {
-        return CustomTextFormField(
-          title: 'Email Address',
-          hintText: 'Your email address',
-          controller: emailController,
-          onChanged: (value) => emailController.text = value,
-        );
-      }
-
-      Widget passwordInput() {
-        return CustomTextFormField(
-          title: 'Password',
-          hintText: 'Your password',
-          obscureText: true,
-          controller: passwordController,
-          onChanged: (value) => passwordController.text = value,
-        );
-      }
-
-      return Container(
-        margin: EdgeInsets.only(top: 30),
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 30,
-        ),
-        decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(
-            24,
-          ),
-        ),
-        child: Column(
-          children: [
-            emailInput(),
-            passwordInput(),
-            _isLoading
-                ? SizedBox()
-                : CustomButton(
-                    title: 'Sign In',
-                    onPressed: () async {
-                      setState(
-                        () {
-                          _isLoading = true;
-                        },
-                      );
-
-                      var isSignIn = await Provider.of<AuthNotifer>(context,
-                              listen: false)
-                          .logInUsers(
-                              emailController.text, passwordController.text);
-
-                      if (isSignIn) {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          MainPage.routeName,
-                        );
-                        setState(
-                          () {
-                            _isLoading = false;
-                          },
-                        );
-                      }
-
-                      setState(
-                        () {
-                          _isLoading = false;
-                        },
-                      );
-                    },
-                  )
-          ],
-        ),
-      );
-    }
-
-    Widget ctaButton() {
-      return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            SignUpPage.routeName,
-          );
-        },
-        child: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(
-            top: 50,
-            bottom: 73,
-          ),
-          child: Text(
-            'Don\'t have an account? Sign Up',
-            style: titleTextStyle.copyWith(
-              color: kGreyColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w300,
-              decoration: TextDecoration.underline,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
-          children: [
-            title(),
-            inputSection(context),
-            ctaButton(),
-          ],
+        //req expression for email  validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        emailController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.mail),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Email",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
+
+    final passwordField = TextFormField(
+      controller: passwordController,
+      obscureText: isHiddenPassword,
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{6,}$'); //b
+        if (value!.isEmpty) {
+          return ("Password is required for login");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid Password (Min.6Character)");
+        }
+      },
+      onSaved: (value) {
+        passwordController.text = value!;
+      },
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.vpn_key),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Password",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        suffixIcon: InkWell(
+          onTap: _togglePasswordView,
+          child: Icon(Icons.visibility),
+        ),
+      ),
+    );
+
+    final loginButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.blueGrey,
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          signIn(emailController.text, passwordController.text);
+        },
+        child: Text(
+          "Login",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white10,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 50,
+                      child: Text(
+                        "App Employee",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontFamily: "Biryani",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: Image.asset(
+                        "images/logo_app.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(height: 45),
+                    emailField,
+                    SizedBox(height: 25),
+                    passwordField,
+                    SizedBox(height: 35),
+                    loginButton,
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Don't have an account?"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpPage()));
+                          },
+                          child: Text(
+                            "SignUp",
+                            style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+//login function
+
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.pushReplacementNamed(context, MainPage.routeName)
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
+
+  //isHiddenPassword
+  void _togglePasswordView() {
+    // if (isHiddenPassword == true) {
+    //     isHiddenPassword = false;
+    // } else {
+    //   isHiddenPassword = true;
+    // }
+    setState(() {
+      isHiddenPassword = !isHiddenPassword;
+    });
   }
 }

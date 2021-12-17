@@ -5,7 +5,6 @@ import 'package:kost_z/pages/sign_in_page.dart';
 
 class SettingPage extends StatelessWidget {
   static const routeName = '/setting_page';
-  
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
