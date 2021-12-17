@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/pages/sign_in_page.dart';
+import 'package:kost_z/pages/log_in_page.dart';
 
 class SettingPage extends StatelessWidget {
   static const routeName = '/setting_page';

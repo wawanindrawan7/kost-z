@@ -1,15 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
-import 'package:kost_z/widgets/custom_button.dart';
-import 'package:kost_z/widgets/custom_text_from_field.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/sign_in_page';
@@ -95,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueGrey,
+      color: kPrimaryColor,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -131,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 50,
                       child: Text(
-                        "App Employee",
+                        "Hi, People!",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -141,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(
-                      width: 300,
+                      width: 250,
                       child: Image.asset(
                         "images/logo_app.png",
                         fit: BoxFit.contain,

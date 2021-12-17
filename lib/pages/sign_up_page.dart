@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/data/models/user_model.dart';
 import 'package:kost_z/pages/main_page.dart';
 
@@ -54,6 +55,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "First Name",
         border: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -173,10 +175,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
 
+    // ignore: non_constant_identifier_names
     final SignUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueGrey,
+      color: kPrimaryColor,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -223,6 +226,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                        height: 50,
+                        child: Text(
+                          "Register Your App",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontFamily: "Biryani",
+                          ),
+                        ),
+                      ),
                       SizedBox(
                           width: 200,
                           child: Image.asset(
