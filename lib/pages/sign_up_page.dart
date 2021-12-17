@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/cubit/auth_cubit.dart';
+import 'package:kost_z/domain/entities/user.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/sign_in_page.dart';
+import 'package:kost_z/providers/auth_notifier.dart';
 import 'package:kost_z/widgets/custom_button.dart';
 import 'package:kost_z/widgets/custom_text_from_field.dart';
+import 'package:provider/provider.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   static const routeName = '/sign_up_page';
   SignUpPage({Key? key}) : super(key: key);
 
-  final TextEditingController nameController = TextEditingController(text: '');
-  final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController passwordController =
-      TextEditingController(text: '');
-  final TextEditingController hobbyController = TextEditingController(text: '');
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +47,7 @@ class SignUpPage extends StatelessWidget {
           title: 'Full Name',
           hintText: 'Your full name',
           controller: nameController,
+          onChanged: (value) => nameController.text = value,
         );
       }
 
@@ -46,6 +56,7 @@ class SignUpPage extends StatelessWidget {
           title: 'Email Address',
           hintText: 'Your email address',
           controller: emailController,
+          onChanged: (value) => emailController.text = value,
         );
       }
 
@@ -55,50 +66,16 @@ class SignUpPage extends StatelessWidget {
           hintText: 'Your password',
           obscureText: true,
           controller: passwordController,
+          onChanged: (value) => passwordController.text = value,
         );
       }
 
-      Widget hobbyInput() {
+      Widget addressInput() {
         return CustomTextFormField(
           title: 'Hobby',
           hintText: 'Your hobby',
-          controller: hobbyController,
-        );
-      }
-
-      Widget submitButton() {
-        return BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, MainPage.routeName, (route) => false);
-            } else if (state is AuthFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.red,
-                  content: Text(state.error),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is AuthLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            return CustomButton(
-              title: 'Get Started',
-              onPressed: () {
-                context.read<AuthCubit>().signUp(
-                    email: emailController.text,
-                    password: passwordController.text,
-                    name: nameController.text,
-                    hobby: hobbyController.text);
-              },
-            );
-          },
+          controller: addressController,
+          onChanged: (value) => addressController.text = value,
         );
       }
 
@@ -119,8 +96,59 @@ class SignUpPage extends StatelessWidget {
             nameInput(),
             emailInput(),
             passwordInput(),
-            hobbyInput(),
-            submitButton(),
+            addressInput(),
+            Consumer<AuthNotifer>(
+              builder: (context, state, _) {
+                if (state.userSignUpState == RequestState.Loading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state.userSignUpState == RequestState.Error) {
+                  return Text(
+                    state.msg!,
+                    style: titleTextStyle.copyWith(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _isLoading
+                ? SizedBox()
+                : CustomButton(
+                    title: 'Sign Up',
+                    onPressed: () async {
+                      setState(() {
+                        _isLoading = true;
+                      });
+
+                      Users user = Users(
+                        email: emailController.text,
+                        name: nameController.text,
+                        address: addressController.text,
+                      );
+
+                      var isSignUp =
+                          await Provider.of<AuthNotifer>(context, listen: false)
+                              .registerUser(
+                        user,
+                        passwordController.text,
+                      );
+
+                      if (isSignUp) {
+                        Navigator.pop(context);
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+
+                      setState(() {
+                        _isLoading = false;
+                      });
+                    },
+                  ),
           ],
         ),
       );

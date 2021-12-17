@@ -15,3 +15,5 @@ TextStyle titleTextStyle = GoogleFonts.poppins(
 TextStyle contentTextStyle = GoogleFonts.poppins(
   color: kWhiteColor,
 );
+
+var imageBaseUrl = "https://ggtoolkit.com/";

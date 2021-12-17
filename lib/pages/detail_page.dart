@@ -1,32 +1,40 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/models/kost_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailPage extends StatelessWidget {
+import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/models/kost_model.dart';
+
+class DetailPage extends StatefulWidget {
   static const routeName = '/detail_page';
 
-  final KostItem kost;
+  final int id;
+  final Kosan kost;
 
   const DetailPage({
     Key? key,
+    required this.id,
     required this.kost,
   }) : super(key: key);
 
-  Widget contentImage(BuildContext context, KostItem kost) {
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  Widget contentImage(BuildContext context, Kosan kost) {
     return Container(
       height: 400,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(kost.imageUrl),
+          image: NetworkImage("$imageBaseUrl${kost.thumbnail}"),
           fit: BoxFit.cover,
         ),
       ),
     );
   }
 
-  Widget buildTitle() {
+  Widget buildTitle(Kosan kost) {
     return Container(
       margin: EdgeInsets.only(top: 16),
       padding: EdgeInsets.symmetric(horizontal: 24),
@@ -38,7 +46,7 @@ class DetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  kost.name,
+                  kost.nama,
                   style: titleTextStyle.copyWith(
                       fontSize: 22, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
@@ -61,7 +69,7 @@ class DetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          kost.location,
+                          kost.lokasi,
                           style: titleTextStyle.copyWith(fontSize: 14),
                         ),
                       ],
@@ -100,7 +108,7 @@ class DetailPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      kost.rating,
+                      kost.rating.toString(),
                       style: titleTextStyle.copyWith(
                           fontSize: 14, fontWeight: FontWeight.bold),
                     ),
@@ -114,7 +122,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildDescription() {
+  Widget buildDescription(Kosan kost) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -134,7 +142,7 @@ class DetailPage extends StatelessWidget {
           FadeInDown(
             duration: Duration(milliseconds: 900),
             child: Text(
-              kost.description,
+              kost.deskripsi,
               style: titleTextStyle,
               textAlign: TextAlign.justify,
             ),
@@ -144,7 +152,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildFacility() {
+  Widget buildFacility(Kosan kost) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -163,29 +171,12 @@ class DetailPage extends StatelessWidget {
           ),
           FadeInDown(
             duration: Duration(milliseconds: 900),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: kost.facility.map(
-                (facility) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.explore_rounded,
-                            color: Colors.purple,
-                            size: 22,
-                          ),
-                          SizedBox(width: 8),
-                          Text(facility),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ).toList(),
+            child: Row(
+              children: [
+                Text(
+                  kost.fasilitas,
+                ),
+              ],
             ),
           ),
         ],
@@ -193,7 +184,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildOtherImages() {
+  Widget buildOtherImages(Kosan kost) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -216,17 +207,19 @@ class DetailPage extends StatelessWidget {
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: kost.assetImages.map(
-                  (photo) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(photo),
+                children: kost.photo
+                    .map(
+                      (item) => Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            "$imageBaseUrl${item.url}",
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                ).toList(),
+                    )
+                    .toList(),
               ),
             ),
           ),
@@ -235,7 +228,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget buildBody(BuildContext context, KostItem kost) {
+  Widget buildBody(BuildContext context, Kosan kost) {
     return ListView(
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
@@ -254,19 +247,19 @@ class DetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTitle(),
+              buildTitle(kost),
               SizedBox(
                 height: 25,
               ),
-              buildDescription(),
+              buildDescription(kost),
               SizedBox(
                 height: 20,
               ),
-              buildFacility(),
+              buildFacility(kost),
               SizedBox(
                 height: 20,
               ),
-              buildOtherImages(),
+              buildOtherImages(kost),
               SizedBox(
                 height: 20,
               ),
@@ -304,7 +297,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget mapButton() {
+  Widget mapButton(Kosan kost) {
     return SafeArea(
       child: Row(
         children: [
@@ -342,7 +335,7 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kWhiteColor,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => launchUrl('tel:${kost.noHp}'),
+        onPressed: () => launchUrl('tel:${widget.kost.noHp}'),
         icon: Icon(Icons.call),
         label: Text(
           'Contact',
@@ -352,13 +345,13 @@ class DetailPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          contentImage(context, kost),
-          buildBody(context, kost),
+          contentImage(context, widget.kost),
+          buildBody(context, widget.kost),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               backButton(context),
-              mapButton(),
+              mapButton(widget.kost),
             ],
           ),
         ],

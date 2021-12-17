@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/cubit/auth_cubit.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kost_z/pages/get_started_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 
@@ -27,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
             context, GetStartedPage.routeName, (route) => false);
       } else {
         print(user.email);
-        context.read<AuthCubit>().getCurrentUser(user.uid);
         Navigator.pushNamedAndRemoveUntil(
             context, MainPage.routeName, (route) => false);
       }

@@ -1,55 +1,97 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kost_z/cubit/auth_cubit.dart';
-import 'package:kost_z/helpers/navigation_helper.dart';
-import 'package:kost_z/models/kost_item.dart';
+import 'package:http/http.dart';
+import 'package:kost_z/injection.dart' as getIt;
+import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/bookmark_page.dart';
 import 'package:kost_z/pages/explore_page.dart';
 import 'package:kost_z/pages/get_started_page.dart';
 import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
-import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/pages/setting_page.dart';
 import 'package:kost_z/pages/sign_in_page.dart';
 import 'package:kost_z/pages/sign_up_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
+import 'package:kost_z/providers/auth_notifier.dart';
+import 'package:kost_z/providers/kost_notifier.dart';
+import 'package:kost_z/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(MyApp());
+  getIt.init();
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthCubit(),
+        ChangeNotifierProvider(
+          create: (_) => AuthNotifer(
+            signInUser: getIt.getIt(),
+            signUpUser: getIt.getIt(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => KostNotifier(
+            apiService: ApiService(Client()),
+          ),
         ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Kost-Z',
-        navigatorKey: navigatorKey,
-        initialRoute: SplashScreen.routeName,
-        routes: {
-          SplashScreen.routeName: (context) => SplashScreen(),
-          GetStartedPage.routeName: (context) => GetStartedPage(),
-          SignInPage.routeName: (context) => SignInPage(),
-          SignUpPage.routeName: (context) => SignUpPage(),
-          MainPage.routeName: (context) => MainPage(),
-          HomePage.routeName: (context) => HomePage(),
-          DetailPage.routeName: (context) => DetailPage(
-              kost: ModalRoute.of(context)!.settings.arguments as KostItem),
-          SearchPage.routeName: (context) => SearchPage(),
-          ExplorePage.routeName: (context) => ExplorePage(),
-          BookmarkPage.routeName: (context) => BookmarkPage(),
-          SettingPage.routeName: (context) => SettingPage(),
+        home: MainPage(),
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case SplashScreen.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => SplashScreen(),
+              );
+            case MainPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => MainPage(),
+              );
+            case SignInPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => SignInPage(),
+              );
+            case SignUpPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => SignUpPage(),
+              );
+            case HomePage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => HomePage(),
+              );
+            case DetailPage.routeName:
+              Map data = settings.arguments as Map;
+              final int? id = data["id"];
+              final Kosan? kost = data["kost"];
+              return CupertinoPageRoute(
+                builder: (_) => DetailPage(id: id!, kost: kost!),
+              );
+            case ExplorePage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => ExplorePage(),
+              );
+            case BookmarkPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => BookmarkPage(),
+              );
+            case SettingPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => SettingPage(),
+              );
+
+            default:
+          }
         },
       ),
     );

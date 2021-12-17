@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/models/kost_item.dart';
+import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/detail_page.dart';
 
 class KostItemCard extends StatelessWidget {
-  final KostItem kost;
+  final Kosan kost;
 
   KostItemCard({required this.kost});
 
@@ -12,11 +12,10 @@ class KostItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => DetailPage(kost: kost),
-          ),
+          DetailPage.routeName,
+          arguments: {"id": kost.id, "kost": kost},
         );
       },
       child: Card(
@@ -30,7 +29,10 @@ class KostItemCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
-                    image: AssetImage(kost.imageUrl), fit: BoxFit.cover),
+                    image: NetworkImage(
+                      "$imageBaseUrl${kost.thumbnail}",
+                    ),
+                    fit: BoxFit.cover),
               ),
             ),
             Container(
@@ -55,7 +57,7 @@ class KostItemCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    kost.name,
+                    kost.nama,
                     style: titleTextStyle.copyWith(
                         color: kWhiteColor,
                         fontSize: 14,
@@ -77,7 +79,7 @@ class KostItemCard extends StatelessWidget {
                               color: Colors.purple,
                             ),
                             Text(
-                              kost.location,
+                              kost.lokasi,
                               style: titleTextStyle.copyWith(
                                 color: kWhiteColor,
                                 fontSize: 12,
@@ -116,7 +118,7 @@ class KostItemCard extends StatelessWidget {
                         width: 2,
                       ),
                       Text(
-                        kost.rating,
+                        kost.rating.toString(),
                         style: titleTextStyle.copyWith(
                             color: kBlackColor,
                             fontSize: 14,

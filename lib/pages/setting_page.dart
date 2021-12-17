@@ -1,45 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/cubit/auth_cubit.dart';
 import 'package:kost_z/pages/sign_in_page.dart';
 
 class SettingPage extends StatelessWidget {
   static const routeName = '/setting_page';
-  const SettingPage({Key? key}) : super(key: key);
+  
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     Widget btnLogOut() {
-      return BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is AuthFailed) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(state.error),
-              ),
-            );
-          } else if (state is AuthInitial) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, SignInPage.routeName, (route) => false);
-          }
+      return ElevatedButton(
+        onPressed: () async {
+          await _auth.signOut();
+          Navigator.pushReplacementNamed(context, SignInPage.routeName);
         },
-        builder: (context, state) {
-          if (state is AuthLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
-          return ElevatedButton(
-            onPressed: () {
-              context.read<AuthCubit>().signOut();
-            },
-            child: Text('Logout'),
-            style: ElevatedButton.styleFrom(primary: kPrimaryColor),
-          );
-        },
+        child: Text('Logout'),
+        style: ElevatedButton.styleFrom(primary: kPrimaryColor),
       );
     }
 

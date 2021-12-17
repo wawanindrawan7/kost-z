@@ -4,13 +4,15 @@ import 'package:kost_z/common/styles.dart';
 class CustomTextFormField extends StatelessWidget {
   final String title;
   final String hintText;
+  final onChanged;
   final bool obscureText;
-  final TextEditingController controller; 
+  final TextEditingController controller;
 
   const CustomTextFormField({
     Key? key,
     required this.title,
     required this.hintText,
+    required this.onChanged,
     this.obscureText = false,
     required this.controller,
   }) : super(key: key);
@@ -31,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
           TextFormField(
             cursorColor: kBlackColor,
             obscureText: obscureText,
+            onChanged: onChanged,
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,

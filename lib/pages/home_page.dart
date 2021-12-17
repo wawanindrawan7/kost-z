@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
+import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/cubit/auth_cubit.dart';
-import 'package:kost_z/models/kost_item.dart';
+import 'package:kost_z/providers/kost_notifier.dart';
+import 'package:kost_z/services/api_service.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home_page';
@@ -68,42 +71,34 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildNameHeader() {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
-        if (state is AuthSuccess) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            margin: EdgeInsets.only(top: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.person_rounded,
-                      color: kWhiteColor,
-                      size: 22,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      'Hi, Iqbal!',
-                      style: titleTextStyle.copyWith(
-                        fontSize: 14,
-                        color: kWhiteColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.only(top: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.person_rounded,
+                color: kWhiteColor,
+                size: 22,
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                'Hi, Iqbal!',
+                style: titleTextStyle.copyWith(
+                  fontSize: 14,
+                  color: kWhiteColor,
+                  fontWeight: FontWeight.w500,
                 ),
-              ],
-            ),
-          );
-        } else {
-          return SizedBox();
-        }
-      },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -152,60 +147,88 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildRecommended() {
-    return Container(
-      margin: EdgeInsets.only(top: 25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 24),
-            child: Text(
-              'Recommended',
-              style: titleTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+    return Consumer<KostNotifier>(
+      builder: (context, state, _) {
+        if (state.state == RequestState.Loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state.state == RequestState.HasData) {
+          return Container(
+            margin: EdgeInsets.only(top: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 24),
+                  child: Text(
+                    'Recommended',
+                    style: titleTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 2,
+                      mainAxisSpacing: 2,
+                    ),
+                    itemCount: state.result.kosan.length,
+                    itemBuilder: (context, index) {
+                      var kostan = state.result.kosan[index];
+                      return KostItemCard(kost: kostan);
+                    },
+                  ), //widget Grid
+                )
+              ],
             ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 4),
-            child: GridView.count(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
-              children: kostItemList.map((kost) {
-                return KostItemCard(kost: kost);
-              }).toList(),
-            ), //widget Grid
-          )
-        ],
-      ),
+          );
+        } else if (state.state == RequestState.Empty) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else if (state.state == RequestState.Error) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else {
+          return Center(
+            child: Text(''),
+          );
+        }
+      },
     );
   }
 
   Widget buildBody(BuildContext context) {
     return SafeArea(
-      child: ListView(children: [
-        Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildHeader(context),
-                buildFeatures(),
-                buildRecommended(),
-              ],
-            ),
-            buildTitleheader(context),
-            buildSearch(context),
-          ],
-        ),
-      ]),
+      child: ListView(
+        children: [
+          Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildHeader(context),
+                  buildFeatures(),
+                  buildRecommended(),
+                ],
+              ),
+              buildTitleheader(context),
+              buildSearch(context),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
