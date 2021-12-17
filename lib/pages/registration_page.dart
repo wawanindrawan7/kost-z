@@ -51,10 +51,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.account_circle),
+        prefixIcon: Icon(
+          Icons.account_circle,
+          color: kPrimaryColor,
+        ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "First Name",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: kPrimaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -78,10 +84,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.account_circle),
+        prefixIcon: Icon(Icons.account_circle,
+          color: kPrimaryColor,),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Second Name",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -107,10 +118,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail),
+        prefixIcon: Icon(Icons.mail,
+          color: kPrimaryColor,),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -134,15 +150,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
+        prefixIcon: Icon(Icons.vpn_key,
+          color: kPrimaryColor,),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
         suffixIcon: InkWell(
           onTap: _togglePasswordView,
-          child: Icon(Icons.visibility),
+          child: Icon(Icons.visibility,
+          color: kPrimaryColor,),
         ),
       ),
     );
@@ -162,15 +184,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
+        prefixIcon: Icon(Icons.vpn_key,
+          color: kPrimaryColor,),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm Password",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
         suffixIcon: InkWell(
           onTap: _toggleConfPasswordView,
-          child: Icon(Icons.visibility),
+          child: Icon(Icons.visibility,
+          color: kPrimaryColor,),
         ),
       ),
     );

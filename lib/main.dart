@@ -11,7 +11,7 @@ import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 import 'package:kost_z/pages/setting_page.dart';
 import 'package:kost_z/pages/log_in_page.dart';
-import 'package:kost_z/pages/sign_up_page.dart';
+import 'package:kost_z/pages/registration_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/services/api_service.dart';

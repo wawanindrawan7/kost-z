@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/pages/main_page.dart';
-import 'package:kost_z/pages/sign_up_page.dart';
+import 'package:kost_z/pages/registration_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/sign_in_page';
@@ -47,10 +47,14 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail),
+        prefixIcon: Icon(Icons.mail, color: kPrimaryColor),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
@@ -79,9 +83,16 @@ class _LoginPageState extends State<LoginPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
         suffixIcon: InkWell(
           onTap: _togglePasswordView,
-          child: Icon(Icons.visibility),
+          child: Icon(
+            Icons.visibility,
+            color: kPrimaryColor,
+          ),
         ),
       ),
     );
@@ -155,14 +166,16 @@ class _LoginPageState extends State<LoginPage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegistrationPage()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegistrationPage(),
+                              ),
+                            );
                           },
                           child: Text(
                             "SignUp",
                             style: TextStyle(
-                              color: Colors.blueGrey,
+                              color: kPrimaryColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
@@ -186,14 +199,21 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => MainPage())),
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
+          .then(
+            (uid) => {
+              Fluttertoast.showToast(msg: "Login Successful"),
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => MainPage(),
+                ),
+              ),
+            },
+          )
+          .catchError(
+        (e) {
+          Fluttertoast.showToast(msg: "Login Failed");
+        },
+      );
     }
   }
 
