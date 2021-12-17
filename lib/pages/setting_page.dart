@@ -14,7 +14,7 @@ class SettingPage extends StatelessWidget {
       return ElevatedButton(
         onPressed: () async {
           await _auth.signOut();
-          Navigator.pushReplacementNamed(context, SignInPage.routeName);
+          Navigator.pushReplacementNamed(context, LoginPage.routeName);
         },
         child: Text('Logout'),
         style: ElevatedButton.styleFrom(primary: kPrimaryColor),

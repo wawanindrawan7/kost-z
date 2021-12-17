@@ -117,7 +117,7 @@ class GetStartedPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
-                        SignInPage.routeName,
+                        LoginPage.routeName,
                       );
                     },
                     child: Row(

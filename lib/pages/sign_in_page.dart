@@ -11,15 +11,15 @@ import 'package:kost_z/widgets/custom_button.dart';
 import 'package:kost_z/widgets/custom_text_from_field.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   static const routeName = '/sign_in_page';
-  SignInPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>(); //form
 
   final TextEditingController emailController =
@@ -163,7 +163,7 @@ class _SignInPageState extends State<SignInPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpPage()));
+                                    builder: (context) => RegistrationPage()));
                           },
                           child: Text(
                             "SignUp",
@@ -194,7 +194,8 @@ class _SignInPageState extends State<SignInPage> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.pushReplacementNamed(context, MainPage.routeName)
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => MainPage())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);

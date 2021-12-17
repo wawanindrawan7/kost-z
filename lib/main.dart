@@ -20,7 +20,6 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp());
 }
 
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Kost-Z',
-        home: SplashScreen(),
+        home: LoginPage(),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case SplashScreen.routeName:
@@ -49,13 +48,13 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                 builder: (_) => MainPage(),
               );
-            case SignInPage.routeName:
+            case LoginPage.routeName:
               return CupertinoPageRoute(
-                builder: (_) => SignInPage(),
+                builder: (_) => LoginPage(),
               );
-            case SignUpPage.routeName:
+            case RegistrationPage.routeName:
               return CupertinoPageRoute(
-                builder: (_) => SignUpPage(),
+                builder: (_) => RegistrationPage(),
               );
             case HomePage.routeName:
               return CupertinoPageRoute(

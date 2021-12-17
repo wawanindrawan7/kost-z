@@ -1,27 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kost_z/common/request_state.dart';
-import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/data/models/user_model.dart';
-import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/main_page.dart';
-import 'package:kost_z/pages/sign_in_page.dart';
-import 'package:kost_z/widgets/custom_button.dart';
-import 'package:kost_z/widgets/custom_text_from_field.dart';
-import 'package:provider/provider.dart';
 
-class SignUpPage extends StatefulWidget {
-  static const routeName = '/sign_up_page';
-  SignUpPage({Key? key}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  static const routeName = '/sign_in_page';
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _auth = FirebaseAuth.instance;
@@ -292,7 +284,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
     Fluttertoast.showToast(msg: "Account created successfully :)");
 
-    Navigator.pushReplacementNamed(context, MainPage.routeName);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
   }
 
   void _togglePasswordView() {
