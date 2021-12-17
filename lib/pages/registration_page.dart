@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/data/models/user_model.dart';
+import 'package:kost_z/models/user_model.dart';
 import 'package:kost_z/pages/main_page.dart';
 
 class RegistrationPage extends StatefulWidget {

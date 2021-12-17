@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
-import 'package:kost_z/data/models/user_model.dart';
+import 'package:kost_z/models/user_model.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
