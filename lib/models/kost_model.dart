@@ -26,36 +26,37 @@ class Kosan {
     required this.id,
     required this.nama,
     required this.lokasi,
-    required this.fasilitas,
     required this.deskripsi,
     required this.thumbnail,
     required this.maps,
     required this.noHp,
     required this.rating,
+    required this.fasilitas,
     required this.photo,
   });
 
   int id;
   String nama;
   String lokasi;
-  String fasilitas;
   String deskripsi;
   String thumbnail;
   String maps;
   String noHp;
   int rating;
+  List<Fasilitas> fasilitas;
   List<Photo> photo;
 
   factory Kosan.fromJson(Map<String, dynamic> json) => Kosan(
         id: json["id"],
         nama: json["nama"],
         lokasi: json["lokasi"],
-        fasilitas: json["fasilitas"],
         deskripsi: json["deskripsi"],
         thumbnail: json["thumbnail"],
         maps: json["maps"],
         noHp: json["no_hp"],
         rating: json["rating"],
+        fasilitas: List<Fasilitas>.from(
+            json["fasilitas"].map((x) => Fasilitas.fromJson(x))),
         photo: List<Photo>.from(json["photo"].map((x) => Photo.fromJson(x))),
       );
 
@@ -63,13 +64,37 @@ class Kosan {
         "id": id,
         "nama": nama,
         "lokasi": lokasi,
-        "fasilitas": fasilitas,
         "deskripsi": deskripsi,
         "thumbnail": thumbnail,
         "maps": maps,
         "no_hp": noHp,
         "rating": rating,
+        "fasilitas": List<dynamic>.from(fasilitas.map((x) => x.toJson())),
         "photo": List<dynamic>.from(photo.map((x) => x.toJson())),
+      };
+}
+
+class Fasilitas {
+  Fasilitas({
+    required this.id,
+    required this.nama,
+    required this.kosanId,
+  });
+
+  int id;
+  String nama;
+  int kosanId;
+
+  factory Fasilitas.fromJson(Map<String, dynamic> json) => Fasilitas(
+        id: json["id"],
+        nama: json["nama"],
+        kosanId: json["kosan_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "nama": nama,
+        "kosan_id": kosanId,
       };
 }
 
