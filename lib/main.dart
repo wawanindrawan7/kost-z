@@ -2,17 +2,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
 import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/bookmark_page.dart';
 import 'package:kost_z/pages/explore_page.dart';
 import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
+import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/pages/setting_page.dart';
 import 'package:kost_z/pages/log_in_page.dart';
 import 'package:kost_z/pages/registration_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
+import 'package:kost_z/providers/bookmark_notifier.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/services/api_service.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           create: (_) => KostNotifier(
             apiService: ApiService(Client()),
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BookmarkNotifier(),
         ),
       ],
       child: MaterialApp(
@@ -59,6 +63,10 @@ class MyApp extends StatelessWidget {
             case HomePage.routeName:
               return CupertinoPageRoute(
                 builder: (_) => HomePage(),
+              );
+            case SearchPage.routeName:
+              return CupertinoPageRoute(
+                builder: (_) => SearchPage(query: '',),
               );
             case DetailPage.routeName:
               Map data = settings.arguments as Map;

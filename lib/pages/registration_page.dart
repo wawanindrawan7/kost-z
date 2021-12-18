@@ -33,6 +33,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     final firstNameField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       controller: firstNameController,
       keyboardType: TextInputType.name,
@@ -51,6 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
+        
         prefixIcon: Icon(
           Icons.account_circle,
           color: kPrimaryColor,
@@ -68,6 +70,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
 
     final secondNameField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       controller: secondNameController,
       keyboardType: TextInputType.name,
@@ -84,8 +87,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.account_circle,
-          color: kPrimaryColor,),
+        prefixIcon: Icon(
+          Icons.account_circle,
+          color: kPrimaryColor,
+        ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Second Name",
         border: OutlineInputBorder(
@@ -99,6 +104,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
 
     final emailField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.name,
@@ -118,8 +124,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.mail,
-          color: kPrimaryColor,),
+        prefixIcon: Icon(
+          Icons.mail,
+          color: kPrimaryColor,
+        ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
@@ -133,6 +141,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
 
     final passwordField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       controller: passwordController,
       obscureText: isHiddenPassword,
@@ -150,8 +159,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key,
-          color: kPrimaryColor,),
+        prefixIcon: Icon(
+          Icons.vpn_key,
+          color: kPrimaryColor,
+        ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
@@ -163,13 +174,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         suffixIcon: InkWell(
           onTap: _togglePasswordView,
-          child: Icon(Icons.visibility,
-          color: kPrimaryColor,),
+          child: Icon(
+            Icons.visibility,
+            color: kPrimaryColor,
+          ),
         ),
       ),
     );
 
     final confirmationpasswordField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       obscureText: isHiddenConfPassword,
       controller: confirmationpasswordController,
@@ -184,8 +198,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key,
-          color: kPrimaryColor,),
+        prefixIcon: Icon(
+          Icons.vpn_key,
+          color: kPrimaryColor,
+        ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Confirm Password",
         border: OutlineInputBorder(
@@ -197,8 +213,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         suffixIcon: InkWell(
           onTap: _toggleConfPasswordView,
-          child: Icon(Icons.visibility,
-          color: kPrimaryColor,),
+          child: Icon(
+            Icons.visibility,
+            color: kPrimaryColor,
+          ),
         ),
       ),
     );
@@ -261,7 +279,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: kBlackColor,
                             fontFamily: "Biryani",
                           ),
                         ),

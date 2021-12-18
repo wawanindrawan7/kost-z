@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/user_model.dart';
+import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
@@ -20,6 +21,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  late TextEditingController _searchQuery;
+  String valueQuery = 'new value query';
+  bool _isSearching = false;
 
   @override
   void initState() {
@@ -32,41 +36,128 @@ class _HomePageState extends State<HomePage> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
+    _searchQuery = TextEditingController();
   }
 
-  Widget buildSearch(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin:
-              EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.27),
-          alignment: Alignment.topCenter,
-          width: MediaQuery.of(context).size.width * 0.8,
-          child: TextField(
-            cursorColor: kGreyColor,
-            decoration: InputDecoration(
-                filled: true,
-                fillColor: kWhiteColor,
-                contentPadding: EdgeInsets.all(0),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey.shade500,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  borderSide: BorderSide.none,
-                ),
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade500,
-                ),
-                hintText: "Search kost"),
+  void _onStartSearching() {
+    ModalRoute.of(context)!
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _onStopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void _onStopSearching() {
+    setState(() {
+      _searchQuery.clear();
+      onUpdateSearchQuery("new value query");
+    });
+
+    setState(() {
+      _isSearching = false;
+    });
+  }
+
+  void _ifGetQuery(String query) {
+    Navigator.pushNamed(context, SearchPage.routeName, arguments: query);
+  }
+
+  void onUpdateSearchQuery(String newQuery) {
+    setState(() {
+      valueQuery = newQuery;
+    });
+  }
+
+  List<Widget> _buildAction() {
+    if (_isSearching) {
+      return [
+        IconButton(
+          icon: Icon(
+            Icons.search,
+            color: kPrimaryColor,
           ),
+          onPressed: () {
+            if (_searchQuery.text.isEmpty) {
+              Navigator.pop(context);
+              return;
+            }
+            _ifGetQuery(_searchQuery.text);
+          },
         ),
-      ],
+      ];
+    }
+
+    return [
+      IconButton(
+        icon: Icon(
+          Icons.search,
+          color: kPrimaryColor,
+        ),
+        onPressed: _onStartSearching,
+      )
+    ];
+  }
+
+  Widget _buildTitleApp(BuildContext context) {
+    return Text(
+      "KOST-Z",
+      style: titleTextStyle.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: kPrimaryColor,
+      ),
     );
   }
+
+  Widget _buildSearchField() {
+    return TextField(
+      cursorColor: kPrimaryColor,
+      controller: _searchQuery,
+      autofocus: true,
+      decoration: InputDecoration(
+        hintText: 'Search ...',
+        border: InputBorder.none,
+        hintStyle: TextStyle(color: Colors.grey.shade400),
+      ),
+      style: TextStyle(color: kPrimaryColor, fontSize: 16),
+      onChanged: onUpdateSearchQuery,
+    );
+  }
+
+  // Widget buildSearch(BuildContext context) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       Container(
+  //         margin:
+  //             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.27),
+  //         alignment: Alignment.topCenter,
+  //         width: MediaQuery.of(context).size.width * 0.8,
+  //         child: TextField(
+  //           cursorColor: kGreyColor,
+  //           decoration: InputDecoration(
+  //               filled: true,
+  //               fillColor: kWhiteColor,
+  //               contentPadding: EdgeInsets.all(0),
+  //               prefixIcon: Icon(
+  //                 Icons.search,
+  //                 color: Colors.grey.shade500,
+  //               ),
+  //               border: OutlineInputBorder(
+  //                 borderRadius: BorderRadius.circular(50),
+  //                 borderSide: BorderSide.none,
+  //               ),
+  //               hintStyle: TextStyle(
+  //                 fontSize: 14,
+  //                 color: Colors.grey.shade500,
+  //               ),
+  //               hintText: "Search kost"),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget buildTitleheader(BuildContext context) {
     return Row(
@@ -244,7 +335,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               buildTitleheader(context),
-              buildSearch(context),
             ],
           ),
         ],
@@ -255,6 +345,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: kWhiteColor,
+        leading: _isSearching
+            ? BackButton(
+                color: kPrimaryColor,
+              )
+            : null,
+        title: _isSearching ? _buildSearchField() : _buildTitleApp(context),
+        actions: _buildAction(),
+      ),
       body: buildBody(context),
     );
   }

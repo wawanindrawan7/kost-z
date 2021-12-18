@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
+      cursorColor: kPrimaryColor,
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
@@ -61,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final passwordField = TextFormField(
+      cursorColor: kPrimaryColor,
       controller: passwordController,
       obscureText: isHiddenPassword,
       validator: (value) {
@@ -77,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.vpn_key),
+        prefixIcon: Icon(Icons.vpn_key, color: kPrimaryColor),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
@@ -140,7 +142,19 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: kBlackColor,
+                          fontFamily: "Biryani",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                      child: Text(
+                        "Log In With Your Account",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: kBlackColor,
                           fontFamily: "Biryani",
                         ),
                       ),

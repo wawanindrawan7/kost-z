@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/detail_page.dart';
+import 'package:kost_z/providers/bookmark_notifier.dart';
+import 'package:provider/provider.dart';
 
-class KostItemCard extends StatelessWidget {
+class KostItemCard extends StatefulWidget {
   final Kosan kost;
 
   KostItemCard({required this.kost});
 
   @override
+  State<KostItemCard> createState() => _KostItemCardState();
+}
+
+class _KostItemCardState extends State<KostItemCard> {
+  @override
   Widget build(BuildContext context) {
+    BookmarkNotifier bookmarkNotifier = Provider.of<BookmarkNotifier>(context);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           DetailPage.routeName,
-          arguments: {"id": kost.id, "kost": kost},
+          arguments: {"id": widget.kost.id, "kost": widget.kost},
         );
       },
       child: Card(
@@ -30,7 +38,7 @@ class KostItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18),
                 image: DecorationImage(
                     image: NetworkImage(
-                      "$imageBaseUrl${kost.thumbnail}",
+                      "$imageBaseUrl${widget.kost.thumbnail}",
                     ),
                     fit: BoxFit.cover),
               ),
@@ -57,7 +65,7 @@ class KostItemCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    kost.nama,
+                    widget.kost.nama,
                     style: titleTextStyle.copyWith(
                         color: kWhiteColor,
                         fontSize: 14,
@@ -79,7 +87,7 @@ class KostItemCard extends StatelessWidget {
                               color: Colors.purple,
                             ),
                             Text(
-                              kost.lokasi,
+                              widget.kost.lokasi,
                               style: titleTextStyle.copyWith(
                                 color: kWhiteColor,
                                 fontSize: 12,
@@ -118,7 +126,7 @@ class KostItemCard extends StatelessWidget {
                         width: 2,
                       ),
                       Text(
-                        kost.rating.toString(),
+                        widget.kost.rating.toString(),
                         style: titleTextStyle.copyWith(
                             color: kBlackColor,
                             fontSize: 14,
@@ -127,6 +135,54 @@ class KostItemCard extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    bookmarkNotifier.setKost(widget.kost);
+
+                    if (bookmarkNotifier.isBookmark(widget.kost)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: kPrimaryColor,
+                          content: Text(
+                            'Has been added to the bookmark',
+                            textAlign: TextAlign.center,
+                            style: contentTextStyle,
+                          ),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Has been removed from the Wishlist',
+                            textAlign: TextAlign.center,
+                            style: contentTextStyle,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Icon(
+                      bookmarkNotifier.isBookmark(widget.kost)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red),
+                ),
               ),
             ),
           ],

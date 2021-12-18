@@ -186,7 +186,10 @@ class _DetailPageState extends State<DetailPage> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(item.nama),
+                          Text(
+                            item.nama,
+                            style: titleTextStyle,
+                          ),
                         ],
                       ),
                     ),
