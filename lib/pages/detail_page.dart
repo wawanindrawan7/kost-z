@@ -171,12 +171,27 @@ class _DetailPageState extends State<DetailPage> {
           ),
           FadeInDown(
             duration: Duration(milliseconds: 900),
-            child: Row(
-              children: [
-                Text(
-                  kost.fasilitas,
-                ),
-              ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: kost.fasilitas
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.explore_rounded,
+                            color: kPrimaryColor,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(item.nama),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
