@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dicoding.kost_z">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="kost_z"
         android:icon="@mipmap/ic_launcher">
