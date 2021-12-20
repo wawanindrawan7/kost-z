@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/providers/search_notifier.dart';
-import 'package:kost_z/services/api_service.dart';
 import 'package:kost_z/widgets/search_card.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
@@ -17,63 +16,74 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  Widget _buildTextField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+          )
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(13),
+      ),
+      child: TextField(
+        onSubmitted: (query) {
+          Provider.of<SearchNotifier>(context, listen: false)
+              .fecthRestaurantSearch(query);
+        },
+        decoration: InputDecoration(
+          hintStyle: TextStyle(fontSize: 17),
+          hintText: 'Search',
+          suffixIcon: Icon(Icons.search),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(14),
+        ),
+      ),
+    );
+  }
+
+  _buildSearchResult() {
+    return Consumer<SearchNotifier>(
+      builder: (context, restaurant, child) {
+        if (restaurant.state == RequestState.Loading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (restaurant.state == RequestState.HasData) {
+          if (restaurant.result!.kosan.length == 0) {
+            return Center(child: Text('Data Kosong'));
+          } else {
+            return Expanded(
+              child: ListView.builder(
+                itemCount: restaurant.result!.kosan.length,
+                itemBuilder: (context, index) {
+                  return SearchCard(kost: restaurant.result!.kosan[index]);
+                },
+              ),
+            );
+          }
+        } else {
+          return Center(
+              child: Container(
+            height: 300,
+            width: 300,
+            child: Lottie.asset('assets/not_found.json'),
+          ));
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget buildSearch() {
-      return ChangeNotifierProvider<SearchNotifier>(
-        create: (_) => SearchNotifier(
-            apiService: ApiService(Client()), query: widget.query),
-        child: Consumer<SearchNotifier>(
-          builder: (context, state, _) {
-            if (state.state == RequestState.Loading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state.state == RequestState.HasData) {
-              if (state.result.kosan.length == 0) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Tidak Bisa Menemukan Kost',
-                        style: titleTextStyle.copyWith(
-                            fontWeight: FontWeight.w500),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.result.kosan.length,
-                  itemBuilder: (context, index) {
-                    var kost = state.result.kosan[index];
-                    return SearchCard(kost: kost);
-                  },
-                );
-              }
-            } else if (state.state == RequestState.Empty) {
-              return Center(
-                child: Text(state.message),
-              );
-            } else if (state.state == RequestState.Error) {
-              return Center(
-                child: Text(state.message),
-              );
-            } else {
-              return Center(
-                child: Text(''),
-              );
-            }
-          },
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          color: kPrimaryColor,
+        leading: Icon(
+          Icons.search,
+          color: Colors.purple,
+          size: 30,
         ),
         title: Text(
           'Search Page',
@@ -83,7 +93,15 @@ class _SearchPageState extends State<SearchPage> {
         elevation: 0,
         backgroundColor: kWhiteColor,
       ),
-      body: buildSearch(),
+      body: Column(
+        children: [
+          _buildTextField(),
+          SizedBox(
+            height: 10,
+          ),
+          _buildSearchResult()
+        ],
+      ),
     );
   }
 }

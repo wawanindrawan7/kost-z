@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:kost_z/models/kost_model.dart';
 import 'package:kost_z/pages/bookmark_page.dart';
-import 'package:kost_z/pages/explore_page.dart';
 import 'package:kost_z/pages/home_page.dart';
 import 'package:kost_z/pages/detail_page.dart';
 import 'package:kost_z/pages/main_page.dart';
@@ -15,8 +14,10 @@ import 'package:kost_z/pages/registration_page.dart';
 import 'package:kost_z/pages/splash_screen.dart';
 import 'package:kost_z/providers/bookmark_notifier.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
+import 'package:kost_z/providers/search_notifier.dart';
 import 'package:kost_z/services/api_service.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => SearchNotifier(
+            apiService: ApiService(http.Client()),
+          ),
+        ),
         ChangeNotifierProvider(
           create: (_) => KostNotifier(
             apiService: ApiService(Client()),
@@ -66,7 +72,9 @@ class MyApp extends StatelessWidget {
               );
             case SearchPage.routeName:
               return CupertinoPageRoute(
-                builder: (_) => SearchPage(query: '',),
+                builder: (_) => SearchPage(
+                  query: '',
+                ),
               );
             case DetailPage.routeName:
               Map data = settings.arguments as Map;
@@ -75,9 +83,11 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                 builder: (_) => DetailPage(id: id!, kost: kost!),
               );
-            case ExplorePage.routeName:
+            case SearchPage.routeName:
               return CupertinoPageRoute(
-                builder: (_) => ExplorePage(),
+                builder: (_) => SearchPage(
+                  query: '',
+                ),
               );
             case BookmarkPage.routeName:
               return CupertinoPageRoute(

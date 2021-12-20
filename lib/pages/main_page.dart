@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kost_z/pages/bookmark_page.dart';
-import 'package:kost_z/pages/explore_page.dart';
 import 'package:kost_z/pages/home_page.dart';
+import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/pages/setting_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -17,7 +17,9 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> _pages = [
     HomePage(),
-    ExplorePage(),
+    SearchPage(
+      query: '',
+    ),
     BookmarkPage(),
     SettingPage(),
   ];
@@ -29,8 +31,8 @@ class _MainPageState extends State<MainPage> {
       selectedColor: Colors.purple,
     ),
     SalomonBottomBarItem(
-      icon: Icon(Icons.explore_rounded),
-      title: Text('Explore'),
+      icon: Icon(Icons.search),
+      title: Text('Search'),
       selectedColor: Colors.purple,
     ),
     SalomonBottomBarItem(

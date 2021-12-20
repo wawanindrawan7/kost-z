@@ -5,41 +5,39 @@ import 'package:kost_z/models/search_model.dart';
 import 'dart:async';
 
 import 'package:kost_z/services/api_service.dart';
+import 'package:logger/logger.dart';
 
 class SearchNotifier extends ChangeNotifier {
   final ApiService apiService;
 
-  SearchNotifier({required this.apiService, required String query}) {
-    _fecthKostSearch(query);
-  }
+  SearchNotifier({required this.apiService});
 
-  late SearchKost _kostSearch;
-  late RequestState _state;
+  SearchKost? _restaurantSearch;
+  RequestState? _state;
   String _message = '';
 
   String get message => _message;
-  SearchKost get result => _kostSearch;
-  RequestState get state => _state;
+  SearchKost? get result => _restaurantSearch;
+  RequestState? get state => _state;
+  Logger _logger = Logger();
 
-  Future<dynamic> _fecthKostSearch(String query) async {
+  Future<dynamic> fecthRestaurantSearch(String query) async {
     try {
       _state = RequestState.Loading;
       notifyListeners();
-      final kostSearch = await apiService.searchKost(query);
-      if (kostSearch.kosan.isEmpty) {
+      final restoSearch = await apiService.searchKost(query);
+      if (restoSearch.kosan.isEmpty) {
         _state = RequestState.Empty;
         notifyListeners();
-        return _message = 'Empty Data';
       } else {
         _state = RequestState.HasData;
         notifyListeners();
-        print(kostSearch);
-        return _kostSearch = kostSearch;
+        _logger.d(restoSearch.kosan.length);
+        return _restaurantSearch = restoSearch;
       }
     } catch (e) {
       _state = RequestState.Error;
       notifyListeners();
-      return _message = "Connection failed";
     }
   }
 }

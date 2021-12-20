@@ -39,64 +39,10 @@ class _HomePageState extends State<HomePage> {
     _searchQuery = TextEditingController();
   }
 
-  void _onStartSearching() {
-    ModalRoute.of(context)!
-        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _onStopSearching));
-
-    setState(() {
-      _isSearching = true;
-    });
-  }
-
-  void _onStopSearching() {
-    setState(() {
-      _searchQuery.clear();
-      onUpdateSearchQuery("new value query");
-    });
-
-    setState(() {
-      _isSearching = false;
-    });
-  }
-
-  void _ifGetQuery(String query) {
-    Navigator.pushNamed(context, SearchPage.routeName, arguments: query);
-  }
-
   void onUpdateSearchQuery(String newQuery) {
     setState(() {
       valueQuery = newQuery;
     });
-  }
-
-  List<Widget> _buildAction() {
-    if (_isSearching) {
-      return [
-        IconButton(
-          icon: Icon(
-            Icons.search,
-            color: kPrimaryColor,
-          ),
-          onPressed: () {
-            if (_searchQuery.text.isEmpty) {
-              Navigator.pop(context);
-              return;
-            }
-            _ifGetQuery(_searchQuery.text);
-          },
-        ),
-      ];
-    }
-
-    return [
-      IconButton(
-        icon: Icon(
-          Icons.search,
-          color: kPrimaryColor,
-        ),
-        onPressed: _onStartSearching,
-      )
-    ];
   }
 
   Widget _buildTitleApp(BuildContext context) {
@@ -124,40 +70,6 @@ class _HomePageState extends State<HomePage> {
       onChanged: onUpdateSearchQuery,
     );
   }
-
-  // Widget buildSearch(BuildContext context) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Container(
-  //         margin:
-  //             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.27),
-  //         alignment: Alignment.topCenter,
-  //         width: MediaQuery.of(context).size.width * 0.8,
-  //         child: TextField(
-  //           cursorColor: kGreyColor,
-  //           decoration: InputDecoration(
-  //               filled: true,
-  //               fillColor: kWhiteColor,
-  //               contentPadding: EdgeInsets.all(0),
-  //               prefixIcon: Icon(
-  //                 Icons.search,
-  //                 color: Colors.grey.shade500,
-  //               ),
-  //               border: OutlineInputBorder(
-  //                 borderRadius: BorderRadius.circular(50),
-  //                 borderSide: BorderSide.none,
-  //               ),
-  //               hintStyle: TextStyle(
-  //                 fontSize: 14,
-  //                 color: Colors.grey.shade500,
-  //               ),
-  //               hintText: "Search kost"),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget buildTitleheader(BuildContext context) {
     return Row(
@@ -354,7 +266,6 @@ class _HomePageState extends State<HomePage> {
               )
             : null,
         title: _isSearching ? _buildSearchField() : _buildTitleApp(context),
-        actions: _buildAction(),
       ),
       body: buildBody(context),
     );

@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/pages/get_started_page.dart';
+import 'package:kost_z/pages/main_page.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash_screen';
@@ -16,18 +18,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     startSplashScreen();
-    // Timer(Duration(seconds: 3), () {
-    //   User? user = FirebaseAuth.instance.currentUser;
+    Timer(Duration(seconds: 3), () {
+      User? user = FirebaseAuth.instance.currentUser;
 
-    //   if (user == null) {
-    //     Navigator.pushNamedAndRemoveUntil(
-    //         context, GetStartedPage.routeName, (route) => false);
-    //   } else {
-    //     print(user.email);
-    //     Navigator.pushNamedAndRemoveUntil(
-    //         context, MainPage.routeName, (route) => false);
-    //   }
-    // });
+      if (user == null) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, GetStartedPage.routeName, (route) => false);
+      } else {
+        print(user.email);
+        Navigator.pushNamedAndRemoveUntil(
+            context, MainPage.routeName, (route) => false);
+      }
+    });
     super.initState();
   }
 
