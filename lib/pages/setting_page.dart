@@ -1,12 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kost_z/common/styles.dart';
+import 'package:kost_z/models/user_model.dart';
 import 'package:kost_z/pages/log_in_page.dart';
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends StatefulWidget {
   static const routeName = '/setting_page';
 
+  @override
+  State<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  UserModel loggedInUser = UserModel();
+  User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +59,36 @@ class SettingPage extends StatelessWidget {
         backgroundColor: kWhiteColor,
       ),
       body: SafeArea(
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(12),
-            height: 250,
-            width: 300,
-            decoration: BoxDecoration(
-              color: kWhiteColor,
-              borderRadius: BorderRadius.circular(18),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20, top: 30),
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: Image.asset('assets/boy.png'),
+                ),
+                SizedBox(
+                  width: 14,
+                ),
+                Text(
+                  '${loggedInUser.firstName} ${loggedInUser.secondName}',
+                  style: titleTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            child: Column(
+            SizedBox(
+              height: 30,
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -68,7 +110,7 @@ class SettingPage extends StatelessWidget {
                 btnLogOut()
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

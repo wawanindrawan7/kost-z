@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:kost_z/common/request_state.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/user_model.dart';
-import 'package:kost_z/pages/search_page.dart';
 import 'package:kost_z/providers/kost_notifier.dart';
 import 'package:kost_z/widgets/features_card.dart';
 import 'package:kost_z/widgets/kost_item_card.dart';
@@ -21,9 +20,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  late TextEditingController _searchQuery;
-  String valueQuery = 'new value query';
-  bool _isSearching = false;
 
   @override
   void initState() {
@@ -36,13 +32,6 @@ class _HomePageState extends State<HomePage> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
-    _searchQuery = TextEditingController();
-  }
-
-  void onUpdateSearchQuery(String newQuery) {
-    setState(() {
-      valueQuery = newQuery;
-    });
   }
 
   Widget _buildTitleApp(BuildContext context) {
@@ -53,21 +42,6 @@ class _HomePageState extends State<HomePage> {
         fontWeight: FontWeight.bold,
         color: kPrimaryColor,
       ),
-    );
-  }
-
-  Widget _buildSearchField() {
-    return TextField(
-      cursorColor: kPrimaryColor,
-      controller: _searchQuery,
-      autofocus: true,
-      decoration: InputDecoration(
-        hintText: 'Search ...',
-        border: InputBorder.none,
-        hintStyle: TextStyle(color: Colors.grey.shade400),
-      ),
-      style: TextStyle(color: kPrimaryColor, fontSize: 16),
-      onChanged: onUpdateSearchQuery,
     );
   }
 
@@ -260,12 +234,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kWhiteColor,
-        leading: _isSearching
-            ? BackButton(
-                color: kPrimaryColor,
-              )
-            : null,
-        title: _isSearching ? _buildSearchField() : _buildTitleApp(context),
+        title: _buildTitleApp(context),
       ),
       body: buildBody(context),
     );

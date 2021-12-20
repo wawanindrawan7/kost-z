@@ -115,10 +115,8 @@ class GetStartedPage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        LoginPage.routeName,
-                      );
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, LoginPage.routeName, (route) => false);
                     },
                     child: Row(
                       children: [
