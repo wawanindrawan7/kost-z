@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/user_model.dart';
+import 'package:kost_z/pages/log_in_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -52,7 +53,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        
         prefixIcon: Icon(
           Icons.account_circle,
           color: kPrimaryColor,
@@ -328,6 +328,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
     //calling our user model
     //sedning these values
 
+    Fluttertoast.showToast(msg: "Account created successfully :)");
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     UserModel userModel = UserModel();
@@ -342,11 +347,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
         .collection("user")
         .doc(user.uid)
         .set(userModel.toMap());
-
-    Fluttertoast.showToast(msg: "Account created successfully :)");
-
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
   }
 
   void _togglePasswordView() {
