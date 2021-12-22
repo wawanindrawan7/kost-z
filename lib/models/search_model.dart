@@ -16,7 +16,7 @@ class SearchKost {
   }
 }
 
-List<Kosan> parseSearchRestaurants(String json) {
+List<Kosan> parseSearchKost(String json) {
   final parsed = jsonDecode(json).cast<Map<String, dynamic>>();
   return parsed.map<SearchKost>((json) => SearchKost.fromJson(json)).toList();
 }
