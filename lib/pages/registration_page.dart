@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kost_z/common/styles.dart';
 import 'package:kost_z/models/user_model.dart';
-import 'package:kost_z/pages/log_in_page.dart';
 import 'package:kost_z/pages/main_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -331,7 +330,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     Fluttertoast.showToast(msg: "Account created successfully :)");
 
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+        MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;

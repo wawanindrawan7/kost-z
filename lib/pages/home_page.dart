@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildFeatures() {
     return Container(
-      margin: EdgeInsets.only(top: 40),
+      margin: EdgeInsets.only(top: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
