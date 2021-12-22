@@ -33,7 +33,7 @@ class _SearchPageState extends State<SearchPage> {
       child: TextField(
         onSubmitted: (query) {
           Provider.of<SearchNotifier>(context, listen: false)
-              .fecthRestaurantSearch(query);
+              .fecthKostSearch(query);
         },
         decoration: InputDecoration(
           hintStyle: TextStyle(fontSize: 17),
@@ -48,18 +48,18 @@ class _SearchPageState extends State<SearchPage> {
 
   _buildSearchResult() {
     return Consumer<SearchNotifier>(
-      builder: (context, restaurant, child) {
-        if (restaurant.state == RequestState.Loading) {
+      builder: (context, kost, child) {
+        if (kost.state == RequestState.Loading) {
           return Center(child: CircularProgressIndicator());
-        } else if (restaurant.state == RequestState.HasData) {
-          if (restaurant.result!.kosan.length == 0) {
+        } else if (kost.state == RequestState.HasData) {
+          if (kost.result!.kosan.length == 0) {
             return Center(child: Text('Data Kosong'));
           } else {
             return Expanded(
               child: ListView.builder(
-                itemCount: restaurant.result!.kosan.length,
+                itemCount: kost.result!.kosan.length,
                 itemBuilder: (context, index) {
-                  return SearchCard(kost: restaurant.result!.kosan[index]);
+                  return SearchCard(kost: kost.result!.kosan[index]);
                 },
               ),
             );

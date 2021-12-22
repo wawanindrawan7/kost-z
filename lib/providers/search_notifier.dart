@@ -12,28 +12,28 @@ class SearchNotifier extends ChangeNotifier {
 
   SearchNotifier({required this.apiService});
 
-  SearchKost? _restaurantSearch;
+  SearchKost? _kostSearch;
   RequestState? _state;
   String _message = '';
 
   String get message => _message;
-  SearchKost? get result => _restaurantSearch;
+  SearchKost? get result => _kostSearch;
   RequestState? get state => _state;
   Logger _logger = Logger();
 
-  Future<dynamic> fecthRestaurantSearch(String query) async {
+  Future<dynamic> fecthKostSearch(String query) async {
     try {
       _state = RequestState.Loading;
       notifyListeners();
-      final restoSearch = await apiService.searchKost(query);
-      if (restoSearch.kosan.isEmpty) {
+      final kostSearch = await apiService.searchKost(query);
+      if (kostSearch.kosan.isEmpty) {
         _state = RequestState.Empty;
         notifyListeners();
       } else {
         _state = RequestState.HasData;
         notifyListeners();
-        _logger.d(restoSearch.kosan.length);
-        return _restaurantSearch = restoSearch;
+        _logger.d(kostSearch.kosan.length);
+        return _kostSearch = kostSearch;
       }
     } catch (e) {
       _state = RequestState.Error;
