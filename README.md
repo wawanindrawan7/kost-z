@@ -53,6 +53,8 @@ https://ggtoolkit.com/api/kosan
 - Salomon_bottom_bar (https://pub.dev/packages/salomon_bottom_bar) 
 - Url_launcher (https://pub.dev/packages/url_launcher) 
 
+### 📹 DEMO APLIKASI
+- [Demo Aplikasi](https://drive.google.com/file/d/18V3e6eR2LFSTeDU5k1IU1iZcWsWXYuEu/view?usp=sharing )
 
 
 
