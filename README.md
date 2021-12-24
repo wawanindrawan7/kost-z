@@ -33,6 +33,7 @@ https://ggtoolkit.com/api/kosan
 
 ## :computer: PROGRAMMING LANGUAGE & FRAMEWORK
 - #### Dart & Flutter
+- #### PHP & LARAVEL (Backend untuk API)
 
 # Library
 - animate_do (https://pub.dev/packages/animate_do) 
